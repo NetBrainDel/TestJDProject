@@ -31,6 +31,7 @@
     </servlet-mapping>
 
 <!--    localhost:8080/application/FrontController-->
+
     <servlet>
         <servlet-name>500WEB</servlet-name>
         <jsp-file>/WEB-INF/Errors/500.jsp</jsp-file>
