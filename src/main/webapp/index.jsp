@@ -13,9 +13,9 @@
     }
 </style>
 <body>
-<h1 style="color: #fd6e01"> Аренда VIP автомобилей </h1>
-<h2 style="color: #fe8300"> На любой вкус! </h2>
-<h3 style="color: #fec700"> Любую деятельность! </h3>
+<h1 style="color: #8a8787"> Аренда VIP автомобилей </h1>
+<h2 style="color: #fe8300"> Мы предлагаем вам люксовые автомобили,  </h2>
+<h3 style="color: #fec700">  </h3>
 <br/>
 <br/>
 <form action="PS">
