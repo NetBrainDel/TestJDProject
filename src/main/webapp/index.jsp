@@ -25,7 +25,7 @@
     <button button="OA">Наши достижения</button>
 </form>
 <form action="Bye">
-    <button button="Bye">Bye</button>
+    <button button="Bye">не нажимать еще в разработке</button>
 </form>
 </body>
 </html>
