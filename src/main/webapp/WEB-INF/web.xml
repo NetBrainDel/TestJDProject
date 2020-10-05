@@ -31,6 +31,10 @@
     </servlet-mapping>
 
 <!--    localhost:8080/application/FrontController-->
+    <servlet>
+        <servlet-name>COWeb</servlet-name>
+        <jsp-file>/WEB-INF/jsp/CO.jsp</jsp-file>
+    </servlet>
 
     <servlet>
         <servlet-name>500WEB</servlet-name>
@@ -38,8 +42,8 @@
     </servlet>
 
     <servlet>
-        <servlet-name>HelloWeb</servlet-name>
-        <jsp-file>/WEB-INF/jsp/Hello.jsp</jsp-file>
+        <servlet-name>PSWeb</servlet-name>
+        <jsp-file>/WEB-INF/jsp/PS.jsp</jsp-file>
     </servlet>
 
     <servlet>
@@ -48,9 +52,14 @@
     </servlet>
 
     <servlet>
-        <servlet-name>HowAreYouWeb</servlet-name>
-        <jsp-file>/WEB-INF/jsp/HowAreYou.jsp</jsp-file>
+        <servlet-name>OAWeb</servlet-name>
+        <jsp-file>/WEB-INF/jsp/OA.jsp</jsp-file>
     </servlet>
+
+    <servlet-mapping>
+        <servlet-name>COWeb</servlet-name>
+        <url-pattern>/CO</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>500WEB</servlet-name>
@@ -58,8 +67,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>HelloWeb</servlet-name>
-        <url-pattern>/Hello</url-pattern>
+        <servlet-name>PSWeb</servlet-name>
+        <url-pattern>/PS</url-pattern>
     </servlet-mapping>
 
     <!--    localhost:8080/application/hello-->
@@ -71,8 +80,8 @@
     <!--    localhost:8080/application/bye-->
 
     <servlet-mapping>
-        <servlet-name>HowAreYouWeb</servlet-name>
-        <url-pattern>/HowAreYou</url-pattern>
+        <servlet-name>OAWeb</servlet-name>
+        <url-pattern>/OA</url-pattern>
     </servlet-mapping>
     <!--    localhost:8080/application/HowAreYou-->
 

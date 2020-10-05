@@ -1,27 +1,28 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Аренда автомобилей</title>
+    <title>Аренда VIP автомобилей</title>
 </head>
-<h1 style="color: #8b3c00"> Аренда автомобилей </h1>
 <style type="text/css">
-    body{
-
-        width: max-content;
-        height: max-content;
-        background-image: url(https://s1.1zoom.ru/big3/16/Rolls-Royce_2016_Spofec_489580.jpg);
-        background-repeat: no-repeat;
+    html {
+        background: url(https://s1.1zoom.ru/big3/16/Rolls-Royce_2016_Spofec_489580.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
     }
 </style>
 <body>
-
+<h1 style="color: #fd6e01"> Аренда VIP автомобилей </h1>
+<h2 style="color: #fe8300"> На любой вкус! </h2>
+<h3 style="color: #fec700"> Любую деятельность! </h3>
 <br/>
 <br/>
-<form action="Hello">
-   <button button="Hello">Hello</button>
+<form action="PS">
+   <button button="PS">Правила и сотрудничество</button>
 </form>
-<form action="HowAreYou">
-    <button button="HowAreYou">HowAreYou</button>
+<form action="OA">
+    <button button="OA">Наши достижения</button>
 </form>
 <form action="Bye">
     <button button="Bye">Bye</button>
