@@ -5,7 +5,8 @@
 </head>
 <style type="text/css">
     html {
-        background: url(https://s1.1zoom.ru/big3/16/Rolls-Royce_2016_Spofec_489580.jpg) no-repeat center center fixed;
+        background: url(https://s1.1zoom.ru/big3/16/Rolls-Royce_2016_Spofec_489580.jpg)
+        no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
@@ -14,7 +15,7 @@
 </style>
 <body>
 <h1 style="color: #8a8787"> Аренда VIP автомобилей </h1>
-<h2 style="color: #fe8300"> Мы предлагаем вам люксовые автомобили,  </h2>
+<h2 style="color: #fe8300">  </h2>
 <h3 style="color: #fec700">  </h3>
 <br/>
 <br/>

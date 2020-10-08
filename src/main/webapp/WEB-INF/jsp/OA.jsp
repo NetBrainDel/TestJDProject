@@ -5,7 +5,7 @@
 </head>
 <style type="text/css">
     html {
-        background: url(https://img1.goodfon.ru/wallpaper/nbig/4/b5/2014-porsche-911-carrera-4-3105.jpg) no-repeat center center fixed;
+        background: url(/images/Porsche911.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;

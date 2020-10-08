@@ -5,7 +5,7 @@
 </head>
 <style type="text/css">
     html {
-        background: url(https://s1.1zoom.ru/big3/33/Bentley_2016_Mulsanne_504100.jpg) no-repeat center center fixed;
+        background: url(/images/Bentley.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;

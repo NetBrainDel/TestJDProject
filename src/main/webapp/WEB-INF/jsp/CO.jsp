@@ -3,9 +3,10 @@
 <head>
     <title>Сотрудничество</title>
 </head>
+<img src="images" >
 <style type="text/css">
     html {
-        background: url(http://complex-oil.com/wp-content/uploads/2020/06/AdobeStock_81804042-768x512.jpeg) no-repeat center center fixed;
+        background: url(/images/Сотр.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
