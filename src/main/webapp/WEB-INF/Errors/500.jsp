@@ -5,5 +5,6 @@
 </head>
 <body>
 ERRORS 500
+и че дальше?
 </body>
 </html>

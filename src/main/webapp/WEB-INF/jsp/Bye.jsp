@@ -5,6 +5,8 @@
 </head>
 <body>
 <br/>
+${carModel}
+
 ${userName}
 <br/>
 <br/>

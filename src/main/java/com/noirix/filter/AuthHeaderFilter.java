@@ -23,7 +23,7 @@ public class AuthHeaderFilter implements Filter {
         HttpServletRequest castedRequest = (HttpServletRequest) request;
         String authHeader = castedRequest.getHeader("X-Auth-Token");
         if (StringUtils.isNotBlank(authHeader)) { //for future JWT Token Auth
-            System.out.println("Header was found with payload: " + authHeader);
+           System.out.println("Header was found with payload: " + authHeader);
         }
         // else {
 
