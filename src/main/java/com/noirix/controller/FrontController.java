@@ -2,11 +2,11 @@
 package com.noirix.controller;
 
 import com.noirix.domain.Car;
-//import com.noirix.domain.User;
+import com.noirix.domain.User;
 import com.noirix.repository.CarRepository;
-//import com.noirix.repository.UserRepository;
+import com.noirix.repository.UserRepository;
 import com.noirix.repository.impl.CarRepositoryImpl;
-//import com.noirix.repository.impl.UserRepositoryImpl;
+import com.noirix.repository.impl.UserRepositoryImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ public class FrontController extends HttpServlet {
 
     public static final CarRepository carRepository = new CarRepositoryImpl();
 
-  //  public static final UserRepository userRepository = new UserRepositoryImpl();
+    public static final UserRepository userRepository = new UserRepositoryImpl();
 
 
 
@@ -45,7 +45,7 @@ public class FrontController extends HttpServlet {
 
             req.setAttribute("carModel", carRepository.findAll().stream().map(Car::getModel).collect(Collectors.joining(",")));
 
-           // req.setAttribute("userName", userRepository.findAll().stream().map(User::getName).collect(Collectors.joining(",")));
+            req.setAttribute("userName", userRepository.findAll().stream().map(User::getName).collect(Collectors.joining(",")));
 
             dispatcher.forward(req, resp);
         }

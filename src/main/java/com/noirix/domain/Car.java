@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Car {
     private Long id;
     private String model;
-    private Date creation_year;
+    private Integer creation_year;
     private Double price;
     private String  color;
 
@@ -34,11 +34,11 @@ public class Car {
         this.model = model;
     }
 
-    public Date getCreation_year() {
+    public Integer getCreation_year() {
         return creation_year;
     }
 
-    public void setCreation_year(Date creation_year) {
+    public void setCreation_year(Integer creation_year) {
         this.creation_year =creation_year;
     }
 
