@@ -4,6 +4,7 @@ import com.noirix.domain.Gender;
 import com.noirix.domain.User;
 import com.noirix.repository.UserColumns;
 import com.noirix.repository.UserRepository;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -11,16 +12,19 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+//@Slf4j
 @Repository
 @Primary
+
 public class UserRepositoryJdbcTemplateImpl implements UserRepository {
+
+    private static final Logger log = Logger.getLogger(UserRepositoryJdbcTemplateImpl.class);
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -32,18 +36,20 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
     @Override
     public List<User> search(String query) {
-        return jdbcTemplate.query("select * from m_users where name like ?", new Object[]{query}, this::getUserRowMapper);
+        log.info("invoking search method");
+        log.info(query);
+        return jdbcTemplate.query("select * from m_users where username like ?", new Object[]{query}, this::getUserRowMapper);
     }
 
     @Override
     public User save(User entity) {
-        final String createQuery = "insert into m_users (name, surname, birth_date, gender, created, changed, weight) " +
-                "values (:name, :surname, :birthDate, :gender, :created, :changed, :weight);";
+        final String createQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight) " +
+                "values (:username, :surname, :birthDate, :gender, :created, :changed, :weight);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource params = new MapSqlParameterSource();
-        params.addValue("name", entity.getName());
+        params.addValue("username", entity.getUsername());
         params.addValue("surname", entity.getSurname());
         params.addValue("birthDate", entity.getBirthDate());
         params.addValue("gender", entity.getGender().name());
@@ -66,7 +72,7 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
     private User getUserRowMapper(ResultSet rs, int i) throws SQLException {
         User user = new User();
         user.setId(rs.getLong(UserColumns.ID));
-        user.setName(rs.getString(UserColumns.NAME));
+        user.setUsername(rs.getString(UserColumns.USERNAME));
         user.setSurname(rs.getString(UserColumns.SURNAME));
         user.setBirthDate(rs.getDate(UserColumns.BIRTH_DATE));
         user.setGender(Gender.valueOf(rs.getString(UserColumns.GENDER)));

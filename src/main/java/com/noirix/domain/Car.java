@@ -21,6 +21,10 @@ public class Car {
 
     private Double price;
 
+    private String color;
+
+    private Integer creation_year;
+
     private Long dealerId;
 
     private Long userId;
@@ -28,4 +32,6 @@ public class Car {
     private int year;
 
     private String country;
+
+
 }

@@ -24,7 +24,7 @@ public class CarRepositoryImpl implements CarRepository {
     private static final String ID = "id";
     private static final String MODEL = "MODEL";
     private static final String COLOR = "COLOR";
-    private static final String CREATION_YEAR = "Creation_year";
+    private static final String CREATION_YEAR = "CREATION_YEAR";
     private static final String PRICE = "PRICE";
 
     @Override
@@ -65,8 +65,8 @@ public class CarRepositoryImpl implements CarRepository {
                 Car car = new Car();
                 car.setId(rs.getLong(ID));
                 car.setModel(rs.getString(MODEL));
-              //  car.setColor(rs.getString(COLOR));
-              //  car.setCreation_year(rs.getInt(CREATION_YEAR));
+                car.setColor(rs.getString(COLOR));
+                car.setCreation_year(rs.getInt(CREATION_YEAR));
                 car.setPrice(rs.getDouble(PRICE));
 
                 result.add(car);

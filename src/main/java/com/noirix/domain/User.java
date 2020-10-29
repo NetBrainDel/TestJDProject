@@ -23,7 +23,7 @@ public class User {
     /*Here we will store PK of m_users table*/
     private Long id;
 
-    private String name;
+    private String username;
 
     private String surname;
 

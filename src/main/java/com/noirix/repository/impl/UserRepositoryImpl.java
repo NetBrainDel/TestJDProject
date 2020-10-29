@@ -5,9 +5,9 @@ import com.noirix.domain.User;
 import com.noirix.exception.EntityNotFoundException;
 import com.noirix.repository.UserColumns;
 import com.noirix.repository.UserRepository;
-import com.noirix.util.DatabaseConfig;
+
 import com.noirix.util.DatabasePropertiesReader;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -29,6 +29,8 @@ import static com.noirix.util.DatabasePropertiesReader.DATABASE_URL;
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
+    private static final Logger log = Logger.getLogger(UserRepositoryImpl.class);
+
     public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();
 
     @Override
@@ -38,17 +40,16 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
-        final String findByIdQuery = "insert into m_users (name, surname, birth_date, gender, created, changed, weight) " +
+        final String findByIdQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight) " +
                 "values (?,?,?,?,?,?,?)";
 
         Connection connection;
         PreparedStatement statement;
-        ResultSet rs;
 
         try {
             Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
         } catch (ClassNotFoundException e) {
-            System.err.println("JDBC Driver Cannot be loaded!");
+            log.error("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
 
@@ -57,7 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement = connection.prepareStatement(findByIdQuery);
             PreparedStatement lastInsertId = connection.prepareStatement("SELECT currval('m_users_id_seq') as last_insert_id;");
 
-            statement.setString(1, user.getName());
+            statement.setString(1, user.getUsername());
             statement.setString(2, user.getSurname());
             statement.setDate(3, new Date(user.getBirthDate().getTime()));
             statement.setString(4, user.getGender().name());
@@ -118,7 +119,7 @@ public class UserRepositoryImpl implements UserRepository {
     private User parseResultSet(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getLong(UserColumns.ID));
-        user.setName(rs.getString(UserColumns.NAME));
+        user.setUsername(rs.getString(UserColumns.USERNAME));
         user.setSurname(rs.getString(UserColumns.SURNAME));
         user.setBirthDate(rs.getDate(UserColumns.BIRTH_DATE));
         user.setGender(Gender.valueOf(rs.getString(UserColumns.GENDER)));
@@ -170,7 +171,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User update(User user) {
         final String findByIdQuery = "update m_users " +
                 "set " +
-                "name = ?,  " +
+                "username = ?,  " +
                 "surname = ?,  " +
                 "birth_date = ?,  " +
                 "gender = ?,  " +
@@ -192,7 +193,7 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
             statement = connection.prepareStatement(findByIdQuery);
-            statement.setString(1, user.getName());
+            statement.setString(1, user.getUsername());
             statement.setString(2, user.getSurname());
             statement.setDate(3, new Date(user.getBirthDate().getTime()));
             statement.setString(4, user.getGender().name());
@@ -236,3 +237,4 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 }
+
