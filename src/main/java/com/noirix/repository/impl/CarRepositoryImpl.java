@@ -65,8 +65,8 @@ public class CarRepositoryImpl implements CarRepository {
                 Car car = new Car();
                 car.setId(rs.getLong(ID));
                 car.setModel(rs.getString(MODEL));
-                car.setColor(rs.getString(COLOR));
-                car.setCreation_year(rs.getInt(CREATION_YEAR));
+              //  car.setColor(rs.getString(COLOR));
+              //  car.setCreation_year(rs.getInt(CREATION_YEAR));
                 car.setPrice(rs.getDouble(PRICE));
 
                 result.add(car);
