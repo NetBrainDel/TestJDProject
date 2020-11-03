@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StopWatch;
 
 @Component
 @Aspect

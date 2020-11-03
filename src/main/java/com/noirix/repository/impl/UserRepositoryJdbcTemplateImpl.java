@@ -4,6 +4,7 @@ import com.noirix.domain.Gender;
 import com.noirix.domain.User;
 import com.noirix.repository.UserColumns;
 import com.noirix.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -85,12 +86,12 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
     @Override
     public User findById(Long key) {
 
-//        MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
+//       MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 //        mapSqlParameterSource.addValue("userId", key);
 //
-//        return namedParameterJdbcTemplate.queryForObject("select * from m_users where id = :userId", mapSqlParameterSource, this::getUserRowMapper);
+//       return namedParameterJdbcTemplate.queryForObject("select * from m_users where id = :userId", mapSqlParameterSource, this::getUserRowMapper);
 
-        return jdbcTemplate.queryForObject("select * from m_users where id = ?", new Object[]{key}, this::getUserRowMapper);
+       return jdbcTemplate.queryForObject("select * from m_users where id = ?", new Object[]{key}, this::getUserRowMapper);
     }
 
     @Override

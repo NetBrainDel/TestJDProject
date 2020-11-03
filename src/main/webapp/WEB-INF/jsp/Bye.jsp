@@ -6,12 +6,14 @@
 <body>
 <br/>
 ${carModel}
-
 ${userName}
 <br/>
 <br/>
 <form action="index.jsp">
     <button button="index.jsp">Главная</button>
 </form>
+<div>
+    ${singleUser}
+</div>
 </body>
 </html>

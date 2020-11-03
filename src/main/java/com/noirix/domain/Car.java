@@ -1,37 +1,43 @@
 package com.noirix.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.security.Timestamp;
 
-@Builder
-@Data
+//DATA
+@Setter
+@Getter
+@EqualsAndHashCode
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Car {
 
-    private Long id;
+  private Long id;
 
-    private String model;
+  private String model;
 
-    private Timestamp guaranteeExpirationDate;
+  private Timestamp guarantee;
 
-    private Double price;
+  private Double price;
 
-    private String color;
+  private String color;
 
-    private Integer creation_year;
+  private Integer creation;
 
-    private Long dealerId;
+  private Double Capacity_i;
 
-    private Long userId;
+  private String Country_of_creation;
 
-    private int year;
+  private Long dealerId;
 
-    private String country;
+  private Long userId;
 
+  private int year;
+
+  private String country;
 
 }

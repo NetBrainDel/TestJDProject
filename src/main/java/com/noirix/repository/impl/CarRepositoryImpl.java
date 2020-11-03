@@ -1,75 +1,108 @@
 package com.noirix.repository.impl;
 
 import com.noirix.domain.Car;
+import com.noirix.exception.EntityNotFoundException;
 import com.noirix.repository.CarRepository;
-import org.apache.commons.lang3.StringUtils;
-
+import com.noirix.util.DatabasePropertiesReader;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Repository;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import static com.noirix.util.DatabasePropertiesReader.DATABASE_DRIVER_NAME;
+import static com.noirix.util.DatabasePropertiesReader.DATABASE_LOGIN;
+import static com.noirix.util.DatabasePropertiesReader.DATABASE_PASSWORD;
+import static com.noirix.util.DatabasePropertiesReader.DATABASE_URL;
 
+@Repository
 public class CarRepositoryImpl implements CarRepository {
-    public static final String POSTRGES_DRIVER_NAME = "org.postgresql.Driver";
-    public static final String DATABASE_URL = "jdbc:postgresql://localhost:";
-    public static final int DATABASE_PORT = 5433;
-    public static final String DATABASE_NAME = "/webinar";
-    public static final String DATABASE_LOGIN = "postgres";
-    public static final String DATABASE_PASSWORD = "root";
 
-    private static final String ID = "id";
-    private static final String MODEL = "MODEL";
-    private static final String COLOR = "COLOR";
-    private static final String CREATION_YEAR = "CREATION_YEAR";
-    private static final String PRICE = "PRICE";
+    private static final Logger log = Logger.getLogger(CarRepositoryImpl.class);
+
+    public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();
 
     @Override
-    public List<Car> search(String query) {
+    public List <Car> search(String query) {
+
         return null;
     }
 
     @Override
-    public Car save(Car object) {
-        return null;
+    public Car save(Car car) {
+        final String findByIdQuery = "insert into m_cars (model, guarantee, price, color, creation, capacity_i, country_of_creation) " +
+                "values (?,?,?,?,?,?,?)";
+
+        Connection connection;
+        PreparedStatement statement;
+
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException e) {
+            log.error("JDBC Driver Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver Cannot be loaded!");
+        }
+
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            PreparedStatement lastInsertId = connection.prepareStatement("SELECT currval('m_cars_id_seq') as last_insert_id;");
+
+            statement.setString(1, car.getModel());
+            statement.setString(2, car.getSurname());
+            statement.setDate(3, new Date(car.getBirthDate().getTime()));
+            statement.setString(4, car.getGender().name());
+            statement.setTimestamp(5, car.getCreated());
+            statement.setTimestamp(6, car.getChanged());
+            statement.setFloat(7, car.getWeight());
+
+            statement.executeUpdate();
+
+            Long insertedId;
+            ResultSet lastIdResultSet = lastInsertId.executeQuery();
+            if (lastIdResultSet.next()) {
+                insertedId = lastIdResultSet.getLong("last_insert_id");
+            } else {
+                throw new RuntimeException("We cannot read sequence last value during User creation!");
+            }
+
+            return findById(insertedId);
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
     }
 
     @Override
-    public List<Car> findAll() {
-        final String findAllQuery = "select * from m_cars order by id";
+    public List<User> findAll() {
+        final String findAllQuery = "select * from m_users order by id";
 
-        List<Car> result = new ArrayList<>();
+        List<User> result = new ArrayList<>();
 
         Connection connection;
         Statement statement;
         ResultSet rs;
 
         try {
-            Class.forName(POSTRGES_DRIVER_NAME);
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
         } catch (ClassNotFoundException e) {
             System.err.println("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
 
-        String jdbcURL = StringUtils.join(DATABASE_URL, DATABASE_PORT, DATABASE_NAME);
-
         try {
-            connection = DriverManager.getConnection(jdbcURL, DATABASE_LOGIN, DATABASE_PASSWORD);
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
             statement = connection.createStatement();
             rs = statement.executeQuery(findAllQuery);
 
             while (rs.next()) {
-                Car car = new Car();
-                car.setId(rs.getLong(ID));
-                car.setModel(rs.getString(MODEL));
-                car.setColor(rs.getString(COLOR));
-                car.setCreation_year(rs.getInt(CREATION_YEAR));
-                car.setPrice(rs.getDouble(PRICE));
-
-                result.add(car);
+                result.add(parseResultSet(rs));
             }
 
             return result;
@@ -79,23 +112,125 @@ public class CarRepositoryImpl implements CarRepository {
         }
     }
 
-    @Override
-    public Car findById(Long key) {
-        return null;
+    private User parseResultSet(ResultSet rs) throws SQLException {
+        User user = new User();
+        user.setId(rs.getLong(UserColumns.ID));
+        user.setUsername(rs.getString(UserColumns.USERNAME));
+        user.setSurname(rs.getString(UserColumns.SURNAME));
+        user.setBirthDate(rs.getDate(UserColumns.BIRTH_DATE));
+        user.setGender(Gender.valueOf(rs.getString(UserColumns.GENDER)));
+        user.setCreated(rs.getTimestamp(UserColumns.CREATED));
+        user.setChanged(rs.getTimestamp(UserColumns.CHANGED));
+        user.setWeight(rs.getFloat(UserColumns.WEIGHT));
+        return user;
     }
 
     @Override
-    public Optional<Car> findOne(Long key) {
-        return Optional.empty();
+    public User findById(Long key) {
+        final String findByIdQuery = "select * from m_users where id = ?";
+
+        Connection connection;
+        PreparedStatement statement;
+        ResultSet rs;
+
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC Driver Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver Cannot be loaded!");
+        }
+
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            statement.setLong(1, key);
+
+            rs = statement.executeQuery();
+
+            if (rs.next()) {
+                return parseResultSet(rs);
+            } else {
+                throw new EntityNotFoundException("User with ID:" + key + "not found");
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
     }
 
     @Override
-    public Car update(Car object) {
-        return null;
+    public Optional<User> findOne(Long key) {
+        return Optional.of(findById(key));
     }
 
     @Override
-    public Long delete(Car object) {
-        return null;
+    public User update(User user) {
+        final String findByIdQuery = "update m_users " +
+                "set " +
+                "username = ?,  " +
+                "surname = ?,  " +
+                "birth_date = ?,  " +
+                "gender = ?,  " +
+                "created = ?,  " +
+                "changed = ?,  " +
+                "weight = ?  " +
+                "where id = ?";
+
+        Connection connection;
+        PreparedStatement statement;
+
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC Driver Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver Cannot be loaded!");
+        }
+
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getSurname());
+            statement.setDate(3, new Date(user.getBirthDate().getTime()));
+            statement.setString(4, user.getGender().name());
+            statement.setTimestamp(5, user.getCreated());
+            statement.setTimestamp(6, user.getChanged());
+            statement.setFloat(7, user.getWeight());
+            statement.setLong(8, user.getId());
+
+            statement.executeUpdate();
+            return findById(user.getId());
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
+    }
+
+    @Override
+    public Long delete(User user) {
+        final String findByIdQuery = "delete from m_users where id = ?";
+
+        Connection connection;
+        PreparedStatement statement;
+
+        try {
+            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+        } catch (ClassNotFoundException e) {
+            System.err.println("JDBC Driver Cannot be loaded!");
+            throw new RuntimeException("JDBC Driver Cannot be loaded!");
+        }
+
+        try {
+            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            statement = connection.prepareStatement(findByIdQuery);
+            statement.setLong(1, user.getId());
+
+            int deletedRows = statement.executeUpdate();
+            return (long) deletedRows;
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+            throw new RuntimeException("SQL Issues!");
+        }
     }
 }
+
