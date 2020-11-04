@@ -1,12 +1,8 @@
 package com.noirix.repository.impl;
 
 import com.noirix.domain.Car;
-import com.noirix.domain.Gender;
-import com.noirix.domain.User;
 import com.noirix.repository.CarColumns;
 import com.noirix.repository.CarRepository;
-import com.noirix.repository.UserColumns;
-import com.noirix.repository.UserRepository;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,17 +43,17 @@ public class CarRepositoryJdbcTemplateImpl  implements CarRepository {
         }
 
         @Override
-        public Car save(User entity) {
-            final String createQuery = "insert into m_cars (model, guarantee, price, color, creation, capacity_i, country_of_creation) " +
-                    "values (:model, :guarantee, :price, :color, :creation, :capacity_i, :country_of_creation);";
+        public Car save(Car entity) {
+            final String createQuery = "insert into m_cars (model, guarantee_expiration_date, price, color, creation, capacity_i, country_of_creation) " +
+                    "values (:model, :guarantee_expiration_date, :price, :color, :creation, :capacity_i, :country_of_creation);";
 
             KeyHolder keyHolder = new GeneratedKeyHolder();
 
             MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("model", entity.getModel());
-            params.addValue("guarantee", entity.getGuarantee());
+            params.addValue("guarantee", entity.getGuarantee_expiration_date());
             params.addValue("price", entity.getPrice());
-            params.addValue("color", entity.getColor);
+            params.addValue("color", entity.getColor());
             params.addValue("creation", entity.getCreation());
             params.addValue("capacity_i", entity.getCapacity_i());
             params.addValue("country_of_creation", entity.getCountry_of_creation());
@@ -77,13 +73,13 @@ public class CarRepositoryJdbcTemplateImpl  implements CarRepository {
         private Car getCarRowMapper(ResultSet rs, int i) throws SQLException {
             Car car = new Car();
             car.setId(rs.getLong(CarColumns.ID));
-            car.setModel(rs.getString(CarColumns.USERNAME));
-            car.setGuarantee(rs.getString(CarColumns.SURNAME));
-            car.setPrice(rs.getDate(CarColumns.BIRTH_DATE));
-            car.setColor(Gender.valueOf(rs.CarColumns(UserColumns.GENDER)));
-            car.setCreation(rs.getTimestamp(CarColumns.CREATED));
-            car.setCapacity_i(rs.getTimestamp(CarColumns.CHANGED));
-            car.setCountry_of_creation(rs.getFloat(CarColumns.WEIGHT));
+            car.setModel(rs.getString(CarColumns.MODEL));
+            car.setGuarantee_expiration_date(rs.getTimestamp(CarColumns.GUARANTEE_EXPIRATION_DATE));
+            car.setPrice(rs.getDouble(CarColumns.PRICE));
+            car.setColor(rs.getString(CarColumns.COLOR));
+            car.setCreation(rs.getDate(CarColumns.CREATION));
+            car.setCapacity_i(rs.getDouble(CarColumns.CAPACITY_I));
+            car.setCountry_of_creation(rs.getString(CarColumns.COUNTRY_OF_CREATION));
             return car;
         }
 

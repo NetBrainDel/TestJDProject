@@ -1,7 +1,9 @@
 package com.noirix;
 
+import com.noirix.domain.Car;
 import com.noirix.domain.Gender;
 import com.noirix.domain.User;
+import com.noirix.service.CarService;
 import com.noirix.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
@@ -20,12 +22,18 @@ public class SpringContextTester {
         AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext("com.noirix");
 
         UserService userService = annotationConfigApplicationContext.getBean(UserService.class);
+        CarService carService = annotationConfigApplicationContext.getBean(CarService.class);
+
 
         log.info(userService.findAll().stream().map(User::getUsername).collect(Collectors.joining(", ")));
+        log.info(carService.findAll().stream().map(Car::getModel).collect(Collectors.joining(", ")));
 
         log.info(userService.findById(11L).toString());
+        log.info(carService.findById(11L).toString());
 
-        List<User> testCreate = userService.search("TestCreate");
+
+        List< User> testCreate = userService.search("TestCreate");
+        List <Car> testCreate1 = carService.search("TestCreate1");
 
         for (User user : testCreate) {
             log.info(user.toString());
@@ -44,6 +52,23 @@ public class SpringContextTester {
 
         log.info(userService.save(userForSave).toString());
 
+
+        for (Car car : testCreate1) {
+            log.info(car.toString());
+        }
+
+        Car carForSave =
+                Car.builder()
+                        .model("mers")
+                        .guarantee_expiration_date(new Timestamp(new Date().getTime()))
+                        .price(2.0)
+                        .color("red")
+                        .creation(new Timestamp(new Date().getTime()))
+                        .capacity_i(2.0)
+                        .country_of_creation("Germany")
+                        .build();
+
+        log.info(carService.save(carForSave).toString());
         //Add search method to service
         //Realise search method with JDBCTemplate or NamedParamJDBCTemplate
     }

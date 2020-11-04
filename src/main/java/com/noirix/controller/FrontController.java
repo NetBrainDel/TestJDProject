@@ -80,6 +80,8 @@ public class FrontController extends HttpServlet {
                 String limit = req.getParameter("limit");
 
                 req.setAttribute("users", userRepository.findAll());
+
+                req.setAttribute("cars", carRepository.findAll());
                 break;
             //     http://localhost:8080/test/FrontController?command=findById&id=10
             case FIND_BY_ID:

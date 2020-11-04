@@ -2,6 +2,7 @@ package com.noirix.repository.impl;
 
 import com.noirix.domain.Car;
 import com.noirix.exception.EntityNotFoundException;
+import com.noirix.repository.CarColumns;
 import com.noirix.repository.CarRepository;
 import com.noirix.util.DatabasePropertiesReader;
 import org.apache.log4j.Logger;
@@ -36,7 +37,7 @@ public class CarRepositoryImpl implements CarRepository {
 
     @Override
     public Car save(Car car) {
-        final String findByIdQuery = "insert into m_cars (model, guarantee, price, color, creation, capacity_i, country_of_creation) " +
+        final String findByIdQuery = "insert into m_cars (model, guarantee_expiration_date, price, color, creation, capacity_i, country_of_creation) " +
                 "values (?,?,?,?,?,?,?)";
 
         Connection connection;
@@ -55,12 +56,12 @@ public class CarRepositoryImpl implements CarRepository {
             PreparedStatement lastInsertId = connection.prepareStatement("SELECT currval('m_cars_id_seq') as last_insert_id;");
 
             statement.setString(1, car.getModel());
-            statement.setString(2, car.getSurname());
-            statement.setDate(3, new Date(car.getBirthDate().getTime()));
-            statement.setString(4, car.getGender().name());
-            statement.setTimestamp(5, car.getCreated());
-            statement.setTimestamp(6, car.getChanged());
-            statement.setFloat(7, car.getWeight());
+            statement.setTimestamp(2, car.getGuarantee_expiration_date());
+            statement.setDouble(3, car.getPrice());
+            statement.setString(4, car.getColor());
+            statement.setDate(5, (Date) car.getCreation());
+            statement.setDouble(6, car.getCapacity_i());
+            statement.setString(7, car.getCountry_of_creation());
 
             statement.executeUpdate();
 
@@ -80,10 +81,10 @@ public class CarRepositoryImpl implements CarRepository {
     }
 
     @Override
-    public List<User> findAll() {
-        final String findAllQuery = "select * from m_users order by id";
+    public List<Car> findAll() {
+        final String findAllQuery = "select * from m_cars order by id";
 
-        List<User> result = new ArrayList<>();
+        List<Car> result = new ArrayList<>();
 
         Connection connection;
         Statement statement;
@@ -112,22 +113,22 @@ public class CarRepositoryImpl implements CarRepository {
         }
     }
 
-    private User parseResultSet(ResultSet rs) throws SQLException {
-        User user = new User();
-        user.setId(rs.getLong(UserColumns.ID));
-        user.setUsername(rs.getString(UserColumns.USERNAME));
-        user.setSurname(rs.getString(UserColumns.SURNAME));
-        user.setBirthDate(rs.getDate(UserColumns.BIRTH_DATE));
-        user.setGender(Gender.valueOf(rs.getString(UserColumns.GENDER)));
-        user.setCreated(rs.getTimestamp(UserColumns.CREATED));
-        user.setChanged(rs.getTimestamp(UserColumns.CHANGED));
-        user.setWeight(rs.getFloat(UserColumns.WEIGHT));
-        return user;
+    private Car parseResultSet(ResultSet rs) throws SQLException {
+        Car car = new Car();
+        car.setId(rs.getLong(CarColumns.ID));
+        car.setModel(rs.getString(CarColumns.MODEL));
+        car.setGuarantee_expiration_date(rs.getTimestamp(CarColumns.GUARANTEE_EXPIRATION_DATE));
+        car.setPrice(rs.getDouble(CarColumns.PRICE));
+        car.setColor(rs.getString(CarColumns.COLOR));
+        car.setCreation(rs.getDate(CarColumns.CREATION));
+        car.setCapacity_i(rs.getDouble(CarColumns.CAPACITY_I));
+        car.setCountry_of_creation(rs.getString(CarColumns.COUNTRY_OF_CREATION));
+        return car;
     }
 
     @Override
-    public User findById(Long key) {
-        final String findByIdQuery = "select * from m_users where id = ?";
+    public Car findById(Long key) {
+        final String findByIdQuery = "select * from m_cars where id = ?";
 
         Connection connection;
         PreparedStatement statement;
@@ -159,21 +160,21 @@ public class CarRepositoryImpl implements CarRepository {
     }
 
     @Override
-    public Optional<User> findOne(Long key) {
+    public Optional<Car> findOne(Long key) {
         return Optional.of(findById(key));
     }
 
     @Override
-    public User update(User user) {
-        final String findByIdQuery = "update m_users " +
+    public Car update(Car car) {
+        final String findByIdQuery = "update m_cars " +
                 "set " +
-                "username = ?,  " +
-                "surname = ?,  " +
-                "birth_date = ?,  " +
-                "gender = ?,  " +
-                "created = ?,  " +
-                "changed = ?,  " +
-                "weight = ?  " +
+                "model = ?,  " +
+                "guarantee_expiration_date = ?,  " +
+                "price = ?,  " +
+                "color = ?,  " +
+                "creation = ?,  " +
+                "capacity_i = ?,  " +
+                "coutry_of_creation = ?  " +
                 "where id = ?";
 
         Connection connection;
@@ -189,17 +190,17 @@ public class CarRepositoryImpl implements CarRepository {
         try {
             connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
             statement = connection.prepareStatement(findByIdQuery);
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getSurname());
-            statement.setDate(3, new Date(user.getBirthDate().getTime()));
-            statement.setString(4, user.getGender().name());
-            statement.setTimestamp(5, user.getCreated());
-            statement.setTimestamp(6, user.getChanged());
-            statement.setFloat(7, user.getWeight());
-            statement.setLong(8, user.getId());
+
+            statement.setString(1, car.getModel());
+            statement.setTimestamp(2, car.getGuarantee_expiration_date());
+            statement.setDouble(3, car.getPrice());
+            statement.setString(4, car.getColor());
+            statement.setDate(5, (Date) car.getCreation());
+            statement.setDouble(6, car.getCapacity_i());
+            statement.setString(7, car.getCountry_of_creation());
 
             statement.executeUpdate();
-            return findById(user.getId());
+            return findById(car.getId());
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             throw new RuntimeException("SQL Issues!");
@@ -207,8 +208,8 @@ public class CarRepositoryImpl implements CarRepository {
     }
 
     @Override
-    public Long delete(User user) {
-        final String findByIdQuery = "delete from m_users where id = ?";
+    public Long delete(Car car) {
+        final String findByIdQuery = "delete from m_cars where id = ?";
 
         Connection connection;
         PreparedStatement statement;
@@ -223,7 +224,7 @@ public class CarRepositoryImpl implements CarRepository {
         try {
             connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
             statement = connection.prepareStatement(findByIdQuery);
-            statement.setLong(1, user.getId());
+            statement.setLong(1, car.getId());
 
             int deletedRows = statement.executeUpdate();
             return (long) deletedRows;

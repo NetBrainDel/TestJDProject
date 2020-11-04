@@ -1,10 +1,9 @@
 package com.noirix.domain;
 
 import lombok.*;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.util.Date;
 
 //DATA
 @Setter
@@ -20,24 +19,20 @@ public class Car {
 
   private String model;
 
-  private Timestamp guarantee;
+  private Timestamp guarantee_expiration_date;
 
   private Double price;
 
   private String color;
 
-  private Integer creation;
+  private Date creation;
 
-  private Double Capacity_i;
+  private Double capacity_i;
 
-  private String Country_of_creation;
+  private String country_of_creation;
 
-  private Long dealerId;
 
-  private Long userId;
 
-  private int year;
 
-  private String country;
 
 }
