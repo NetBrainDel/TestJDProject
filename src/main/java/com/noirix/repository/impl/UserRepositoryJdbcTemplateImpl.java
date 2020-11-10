@@ -15,6 +15,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,7 +26,7 @@ import java.util.Optional;
 
 public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
-    private static final Logger log = Logger.getLogger(UserRepositoryJdbcTemplateImpl.class);
+//    private static final Logger log = Logger.getLogger(UserRepositoryJdbcTemplateImpl.class);
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -37,15 +38,16 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
     @Override
     public List<User> search(String query) {
-        log.info("invoking search method");
-        log.info(query);
+  //      log.info("invoking search method");
+  //     log.info(query);
         return jdbcTemplate.query("select * from m_users where username like ?", new Object[]{query}, this::getUserRowMapper);
+
     }
 
     @Override
     public User save(User entity) {
-        final String createQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight) " +
-                "values (:username, :surname, :birthDate, :gender, :created, :changed, :weight);";
+        final String createQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight,country) " +
+                "values (:username, :surname, :birthDate, :gender, :created, :changed, :weight, :country)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -57,17 +59,20 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
         params.addValue("created", entity.getCreated());
         params.addValue("changed", entity.getChanged());
         params.addValue("weight", entity.getWeight());
+        params.addValue("country", entity.getCountry());
 
         namedParameterJdbcTemplate.update(createQuery, params, keyHolder, new String[]{"id"});
 
         long createdUserId = Objects.requireNonNull(keyHolder.getKey()).longValue();
 
         return findById(createdUserId);
+
     }
 
     @Override
     public List<User> findAll() {
         return jdbcTemplate.query("select * from m_users", this::getUserRowMapper);
+
     }
 
     private User getUserRowMapper(ResultSet rs, int i) throws SQLException {
@@ -80,6 +85,7 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
         user.setCreated(rs.getTimestamp(UserColumns.CREATED));
         user.setChanged(rs.getTimestamp(UserColumns.CHANGED));
         user.setWeight(rs.getFloat(UserColumns.WEIGHT));
+        user.setCountry(rs.getString(UserColumns.COUNTRY));
         return user;
     }
 
@@ -87,16 +93,18 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
     public User findById(Long key) {
 
 //       MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-//        mapSqlParameterSource.addValue("userId", key);
+//       mapSqlParameterSource.addValue("userId", key);
 //
 //       return namedParameterJdbcTemplate.queryForObject("select * from m_users where id = :userId", mapSqlParameterSource, this::getUserRowMapper);
 
        return jdbcTemplate.queryForObject("select * from m_users where id = ?", new Object[]{key}, this::getUserRowMapper);
+
     }
 
     @Override
     public Optional<User> findOne(Long key) {
         return Optional.empty();
+
     }
 
     @Override

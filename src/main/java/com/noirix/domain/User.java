@@ -2,6 +2,12 @@
 package com.noirix.domain;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -28,8 +34,27 @@ public class User {
 
   private Timestamp changed = new Timestamp(System.currentTimeMillis());
 
+  private String country;
+
   private Float weight;
 
 
+//  @Autowired
+//  @Qualifier("getCar")
+//   private Car userCar;
+//
+//  @Inject
+//  @Named("getCar1") //@Primary     ///№1
+//  private Car userCar;
+//
+//  @Autowired
+//private  void setUserCar(@Qualifier("getCar1") Car userCar){ ////№3
+//  this.userCar = userCar;
+//}
+//
+//  @Autowired
+//  public User(Car userCar){ ////№2 \\\№1(constructor)
+//    this.userCar = userCar;
+//  }
 
-    }
+}

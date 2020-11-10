@@ -28,4 +28,7 @@ public class DatabaseConfig {
     @Value("${password}")
     private String password;
 
+    @Value("${test}")
+    private String test;
+
 }

@@ -132,7 +132,7 @@ public class FrontController extends HttpServlet {
                     req.setAttribute("users", userRepository.findAll());
 
                     String id1 = req.getParameter("id");
-                    long carId = Long.parseLong(id);
+                    long carId = Long.parseLong(id1);
                     carRepository.delete(carRepository.findById(carId));
                     req.setAttribute("cars", carRepository.findAll());
 

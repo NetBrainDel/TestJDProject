@@ -35,8 +35,8 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public Car findById(Long userId) {
-        return carRepository.findById(userId);
+    public Car findById(Long carId) {
+        return carRepository.findById(carId);
     }
 
     @Override

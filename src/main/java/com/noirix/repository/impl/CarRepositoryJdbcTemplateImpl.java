@@ -51,12 +51,12 @@ public class CarRepositoryJdbcTemplateImpl  implements CarRepository {
 
             MapSqlParameterSource params = new MapSqlParameterSource();
             params.addValue("model", entity.getModel());
-            params.addValue("guarantee", entity.getGuarantee_expiration_date());
+            params.addValue("guarantee", entity.getGuaranteeExpirationDate());
             params.addValue("price", entity.getPrice());
             params.addValue("color", entity.getColor());
             params.addValue("creation", entity.getCreation());
-            params.addValue("capacity_i", entity.getCapacity_i());
-            params.addValue("country_of_creation", entity.getCountry_of_creation());
+            params.addValue("capacity_i", entity.getCapacityL());
+            params.addValue("country_of_creation", entity.getCountryOfCreation());
 
             namedParameterJdbcTemplate.update(createQuery, params, keyHolder, new String[]{"id"});
 
@@ -74,12 +74,12 @@ public class CarRepositoryJdbcTemplateImpl  implements CarRepository {
             Car car = new Car();
             car.setId(rs.getLong(CarColumns.ID));
             car.setModel(rs.getString(CarColumns.MODEL));
-            car.setGuarantee_expiration_date(rs.getTimestamp(CarColumns.GUARANTEE_EXPIRATION_DATE));
+            car.setGuaranteeExpirationDate(rs.getTimestamp(CarColumns.GUARANTEE_EXPIRATION_DATE));
             car.setPrice(rs.getDouble(CarColumns.PRICE));
             car.setColor(rs.getString(CarColumns.COLOR));
             car.setCreation(rs.getDate(CarColumns.CREATION));
-            car.setCapacity_i(rs.getDouble(CarColumns.CAPACITY_I));
-            car.setCountry_of_creation(rs.getString(CarColumns.COUNTRY_OF_CREATION));
+            car.setCapacityL(rs.getDouble(CarColumns.CAPACITY_L));
+            car.setCountryOfCreation(rs.getString(CarColumns.COUNTRY_OF_CREATION));
             return car;
         }
 

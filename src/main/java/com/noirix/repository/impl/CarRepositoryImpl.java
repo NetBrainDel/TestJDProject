@@ -37,7 +37,7 @@ public class CarRepositoryImpl implements CarRepository {
 
     @Override
     public Car save(Car car) {
-        final String findByIdQuery = "insert into m_cars (model, guarantee_expiration_date, price, color, creation, capacity_i, country_of_creation) " +
+        final String findByIdQuery = "insert into m_cars (model, guarantee_expiration_date, price, color, creation, capacity_l, country_of_creation) " +
                 "values (?,?,?,?,?,?,?)";
 
         Connection connection;
@@ -56,12 +56,12 @@ public class CarRepositoryImpl implements CarRepository {
             PreparedStatement lastInsertId = connection.prepareStatement("SELECT currval('m_cars_id_seq') as last_insert_id;");
 
             statement.setString(1, car.getModel());
-            statement.setTimestamp(2, car.getGuarantee_expiration_date());
+            statement.setTimestamp(2, car.getGuaranteeExpirationDate());
             statement.setDouble(3, car.getPrice());
             statement.setString(4, car.getColor());
             statement.setDate(5, (Date) car.getCreation());
-            statement.setDouble(6, car.getCapacity_i());
-            statement.setString(7, car.getCountry_of_creation());
+            statement.setDouble(6, car.getCapacityL());
+            statement.setString(7, car.getCountryOfCreation());
 
             statement.executeUpdate();
 
@@ -117,12 +117,12 @@ public class CarRepositoryImpl implements CarRepository {
         Car car = new Car();
         car.setId(rs.getLong(CarColumns.ID));
         car.setModel(rs.getString(CarColumns.MODEL));
-        car.setGuarantee_expiration_date(rs.getTimestamp(CarColumns.GUARANTEE_EXPIRATION_DATE));
+        car.setGuaranteeExpirationDate(rs.getTimestamp(CarColumns.GUARANTEE_EXPIRATION_DATE));
         car.setPrice(rs.getDouble(CarColumns.PRICE));
         car.setColor(rs.getString(CarColumns.COLOR));
         car.setCreation(rs.getDate(CarColumns.CREATION));
-        car.setCapacity_i(rs.getDouble(CarColumns.CAPACITY_I));
-        car.setCountry_of_creation(rs.getString(CarColumns.COUNTRY_OF_CREATION));
+        car.setCapacityL(rs.getDouble(CarColumns.CAPACITY_L));
+        car.setCountryOfCreation(rs.getString(CarColumns.COUNTRY_OF_CREATION));
         return car;
     }
 
@@ -173,7 +173,7 @@ public class CarRepositoryImpl implements CarRepository {
                 "price = ?,  " +
                 "color = ?,  " +
                 "creation = ?,  " +
-                "capacity_i = ?,  " +
+                "capacity_l = ?,  " +
                 "coutry_of_creation = ?  " +
                 "where id = ?";
 
@@ -192,12 +192,12 @@ public class CarRepositoryImpl implements CarRepository {
             statement = connection.prepareStatement(findByIdQuery);
 
             statement.setString(1, car.getModel());
-            statement.setTimestamp(2, car.getGuarantee_expiration_date());
+            statement.setTimestamp(2, car.getGuaranteeExpirationDate());
             statement.setDouble(3, car.getPrice());
             statement.setString(4, car.getColor());
             statement.setDate(5, (Date) car.getCreation());
-            statement.setDouble(6, car.getCapacity_i());
-            statement.setString(7, car.getCountry_of_creation());
+            statement.setDouble(6, car.getCapacityL());
+            statement.setString(7, car.getCountryOfCreation());
 
             statement.executeUpdate();
             return findById(car.getId());
