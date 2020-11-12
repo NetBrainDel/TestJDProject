@@ -19,7 +19,7 @@ public class Car {
 
   private String model;
 
-  private Timestamp guaranteeExpirationDate;
+  private Timestamp guarantee_expiration_date;
 
   private Double price;
 
@@ -27,9 +27,10 @@ public class Car {
 
   private Date creation;
 
-  private Double capacityL;
+  private Double capacity_l;
 
-  private String countryOfCreation;
+  private String country_of_creation;
 
+  private Long dealer_id;
 
 }

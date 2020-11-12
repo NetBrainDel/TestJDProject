@@ -4,6 +4,7 @@ import com.noirix.domain.Gender;
 import com.noirix.domain.User;
 import com.noirix.repository.UserColumns;
 import com.noirix.repository.UserRepository;
+import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Primary;
@@ -23,10 +24,11 @@ import java.util.Optional;
 //@Slf4j
 @Repository
 @Primary
+//@Log4j
 
 public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
-//    private static final Logger log = Logger.getLogger(UserRepositoryJdbcTemplateImpl.class);
+    private static final Logger log = Logger.getLogger(UserRepositoryJdbcTemplateImpl.class);
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -35,11 +37,10 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
-
     @Override
     public List<User> search(String query) {
-  //      log.info("invoking search method");
-  //     log.info(query);
+        log.info("invoking search method");
+        log.info(query);
         return jdbcTemplate.query("select * from m_users where username like ?", new Object[]{query}, this::getUserRowMapper);
 
     }

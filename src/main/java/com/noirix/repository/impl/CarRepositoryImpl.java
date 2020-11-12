@@ -25,9 +25,9 @@ import static com.noirix.util.DatabasePropertiesReader.DATABASE_URL;
 @Repository
 public class CarRepositoryImpl implements CarRepository {
 
-    private static final Logger log = Logger.getLogger(CarRepositoryImpl.class);
+    private static final Logger log1 = Logger.getLogger(CarRepositoryImpl.class);
 
-    public static final DatabasePropertiesReader reader = DatabasePropertiesReader.getInstance();
+    public static final DatabasePropertiesReader reader1 = DatabasePropertiesReader.getInstance();
 
     @Override
     public List <Car> search(String query) {
@@ -37,32 +37,32 @@ public class CarRepositoryImpl implements CarRepository {
 
     @Override
     public Car save(Car car) {
-        final String findByIdQuery = "insert into m_cars (model, guarantee_expiration_date, price, color, creation, capacity_l, country_of_creation) " +
-                "values (?,?,?,?,?,?,?)";
+        final String findByIdQuery = "insert into m_cars (model, guarantee_expiration_date, price, color, creation, capacity_l, country_of_creation, dealer_id) " +
+                "values (?,?,?,?,?,?,?,?)";
 
         Connection connection;
         PreparedStatement statement;
 
         try {
-            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+            Class.forName(reader1.getProperty(DATABASE_DRIVER_NAME));
         } catch (ClassNotFoundException e) {
-            log.error("JDBC Driver Cannot be loaded!");
+            log1.error("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
 
         try {
-            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            connection = DriverManager.getConnection(reader1.getProperty(DATABASE_URL), reader1.getProperty(DATABASE_LOGIN), reader1.getProperty(DATABASE_PASSWORD));
             statement = connection.prepareStatement(findByIdQuery);
             PreparedStatement lastInsertId = connection.prepareStatement("SELECT currval('m_cars_id_seq') as last_insert_id;");
 
             statement.setString(1, car.getModel());
-            statement.setTimestamp(2, car.getGuaranteeExpirationDate());
+            statement.setTimestamp(2, car.getGuarantee_expiration_date());
             statement.setDouble(3, car.getPrice());
             statement.setString(4, car.getColor());
             statement.setDate(5, (Date) car.getCreation());
-            statement.setDouble(6, car.getCapacityL());
-            statement.setString(7, car.getCountryOfCreation());
-
+            statement.setDouble(6, car.getCapacity_l());
+            statement.setString(7, car.getCountry_of_creation());
+            statement.setLong(8, car.getDealer_id());
             statement.executeUpdate();
 
             Long insertedId;
@@ -91,14 +91,14 @@ public class CarRepositoryImpl implements CarRepository {
         ResultSet rs;
 
         try {
-            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+            Class.forName(reader1.getProperty(DATABASE_DRIVER_NAME));
         } catch (ClassNotFoundException e) {
             System.err.println("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
 
         try {
-            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            connection = DriverManager.getConnection(reader1.getProperty(DATABASE_URL), reader1.getProperty(DATABASE_LOGIN), reader1.getProperty(DATABASE_PASSWORD));
             statement = connection.createStatement();
             rs = statement.executeQuery(findAllQuery);
 
@@ -117,12 +117,13 @@ public class CarRepositoryImpl implements CarRepository {
         Car car = new Car();
         car.setId(rs.getLong(CarColumns.ID));
         car.setModel(rs.getString(CarColumns.MODEL));
-        car.setGuaranteeExpirationDate(rs.getTimestamp(CarColumns.GUARANTEE_EXPIRATION_DATE));
+        car.setGuarantee_expiration_date(rs.getTimestamp(CarColumns.GUARANTEE_EXPIRATION_DATE));
         car.setPrice(rs.getDouble(CarColumns.PRICE));
         car.setColor(rs.getString(CarColumns.COLOR));
         car.setCreation(rs.getDate(CarColumns.CREATION));
-        car.setCapacityL(rs.getDouble(CarColumns.CAPACITY_L));
-        car.setCountryOfCreation(rs.getString(CarColumns.COUNTRY_OF_CREATION));
+        car.setCapacity_l(rs.getDouble(CarColumns.CAPACITY_L));
+        car.setCountry_of_creation(rs.getString(CarColumns.COUNTRY_OF_CREATION));
+        car.setDealer_id(rs.getLong(CarColumns.DEALER_ID));
         return car;
     }
 
@@ -135,14 +136,14 @@ public class CarRepositoryImpl implements CarRepository {
         ResultSet rs;
 
         try {
-            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+            Class.forName(reader1.getProperty(DATABASE_DRIVER_NAME));
         } catch (ClassNotFoundException e) {
             System.err.println("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
 
         try {
-            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            connection = DriverManager.getConnection(reader1.getProperty(DATABASE_URL), reader1.getProperty(DATABASE_LOGIN), reader1.getProperty(DATABASE_PASSWORD));
             statement = connection.prepareStatement(findByIdQuery);
             statement.setLong(1, key);
 
@@ -174,30 +175,32 @@ public class CarRepositoryImpl implements CarRepository {
                 "color = ?,  " +
                 "creation = ?,  " +
                 "capacity_l = ?,  " +
-                "coutry_of_creation = ?  " +
+                "country_of_creation = ?  " +
+                "dealer_id"+
                 "where id = ?";
 
         Connection connection;
         PreparedStatement statement;
 
         try {
-            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+            Class.forName(reader1.getProperty(DATABASE_DRIVER_NAME));
         } catch (ClassNotFoundException e) {
             System.err.println("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
 
         try {
-            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            connection = DriverManager.getConnection(reader1.getProperty(DATABASE_URL), reader1.getProperty(DATABASE_LOGIN), reader1.getProperty(DATABASE_PASSWORD));
             statement = connection.prepareStatement(findByIdQuery);
 
             statement.setString(1, car.getModel());
-            statement.setTimestamp(2, car.getGuaranteeExpirationDate());
+            statement.setTimestamp(2, car.getGuarantee_expiration_date());
             statement.setDouble(3, car.getPrice());
             statement.setString(4, car.getColor());
             statement.setDate(5, (Date) car.getCreation());
-            statement.setDouble(6, car.getCapacityL());
-            statement.setString(7, car.getCountryOfCreation());
+            statement.setDouble(6, car.getCapacity_l());
+            statement.setString(7, car.getCountry_of_creation());
+            statement.setLong(8, car.getDealer_id());
 
             statement.executeUpdate();
             return findById(car.getId());
@@ -215,14 +218,14 @@ public class CarRepositoryImpl implements CarRepository {
         PreparedStatement statement;
 
         try {
-            Class.forName(reader.getProperty(DATABASE_DRIVER_NAME));
+            Class.forName(reader1.getProperty(DATABASE_DRIVER_NAME));
         } catch (ClassNotFoundException e) {
             System.err.println("JDBC Driver Cannot be loaded!");
             throw new RuntimeException("JDBC Driver Cannot be loaded!");
         }
 
         try {
-            connection = DriverManager.getConnection(reader.getProperty(DATABASE_URL), reader.getProperty(DATABASE_LOGIN), reader.getProperty(DATABASE_PASSWORD));
+            connection = DriverManager.getConnection(reader1.getProperty(DATABASE_URL), reader1.getProperty(DATABASE_LOGIN), reader1.getProperty(DATABASE_PASSWORD));
             statement = connection.prepareStatement(findByIdQuery);
             statement.setLong(1, car.getId());
 

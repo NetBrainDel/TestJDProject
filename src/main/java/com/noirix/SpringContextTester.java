@@ -3,14 +3,11 @@ package com.noirix;
 import com.noirix.domain.Car;
 import com.noirix.domain.Gender;
 import com.noirix.domain.User;
-import com.noirix.repository.CarRepository;
-import com.noirix.repository.UserRepository;
 import com.noirix.service.CarService;
 import com.noirix.service.UserService;
-import com.noirix.util.DatabaseConfig;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j;
+import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -18,7 +15,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 //@Slf4j
+//@Log4j
 public class SpringContextTester {
+        private static final Logger log = Logger.getLogger(SpringContextTester.class);
+
+        private static final Logger log1 = Logger.getLogger(SpringContextTester.class);
+
+
     public static void main(String[] args) {
 
 
@@ -26,11 +29,15 @@ public class SpringContextTester {
 
         UserService userService = annotationConfigApplicationContext.getBean(UserService.class);
 
-        System.out.println(userService.findAll().stream().map(User::getUsername).collect(Collectors.joining(", ")));
+        log.info(userService.findAll().stream().map(User::getUsername).collect(Collectors.joining(", ")));
 
-    System.out.println(userService.findById(17L));
+        log.info(userService.findById(17L).toString());
 
-    System.out.println(userService.search("sasha"));
+        List<User> sasha = userService.search("sasha");
+
+    for (User user : sasha) {
+        log.info(user.toString());
+    }
 
                 User userForSave =
                 User.builder()
@@ -43,9 +50,9 @@ public class SpringContextTester {
                         .weight(81F)
                         .country("Poland")
                         .build();
-        System.out.println(userService.save(userForSave));
-    }
-}
+        log.info(userService.save(userForSave).toString());
+
+//}
 //        AnnotationConfigApplicationContext annotationConfigApplicationContext= new AnnotationConfigApplicationContext("com.noirix");
 //        DatabaseConfig bean = annotationConfigApplicationContext.getBean(DatabaseConfig.class);
 //
@@ -110,31 +117,35 @@ public class SpringContextTester {
 //        log.info(userService.save(userForSave).toString());
 //
 //
-//
-//        CarService carService = annotationConfigApplicationContext.getBean(CarService.class);
-//
-//        log1.info(carService.findAll().stream().map(Car::getModel).collect(Collectors.joining(", ")));
-//
-//        log1.info(carService.findById(11L).toString());
-//
-//        List <Car> testCreate1 = carService.search("TestCreate1");
-//
-//        for (Car car : testCreate1) {
-//            log1.info(car.toString());
-//        }
-//
-//        Car carForSave =
-//                Car.builder()
-//                        .model("mers")
-//                        .guarantee_expiration_date(new Timestamp(new Date().getTime()))
-//                        .price(2.0)
-//                        .color("red")
-//                        .creation(new Timestamp(new Date().getTime()))
-//                        .capacity_i(2.0)
-//                        .country_of_creation("Germany")
-//                        .build();
-//
-//        log1.info(carService.save(carForSave).toString());
 
-//    }
-//}
+        AnnotationConfigApplicationContext annotationConfigApplicationContexts= new AnnotationConfigApplicationContext("com.noirix");
+
+        CarService carService = annotationConfigApplicationContexts.getBean(CarService.class);
+
+        log1.info(carService.findAll().stream().map(Car::getModel).collect(Collectors.joining(", ")));
+
+        log1.info(carService.findById(11L).toString());
+
+        List <Car> sasha1 = carService.search("sasha1");
+
+        for (Car car : sasha1) {
+            log1.info(car.toString());
+        }
+
+        Car carForSave =
+                Car.builder()
+                        .model("mers")
+                        .guarantee_expiration_date(new Timestamp(new Date().getTime()))
+                        .price(2.0)
+                        .color("red")
+                        .creation(new Timestamp(new Date().getTime()))
+                        .capacity_l(2.0)
+                        .country_of_creation("Germany")
+                        .dealer_id(2L)
+                        .build();
+
+        log1.info(carService.save(carForSave).toString());
+
+    }
+}
+

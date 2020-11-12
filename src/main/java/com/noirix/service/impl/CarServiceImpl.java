@@ -13,13 +13,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
 
-  //  private final CarRepository carRepository;
+    private final CarRepository carRepository;
 
-    private CarRepository carRepository;
-
-    public CarServiceImpl(CarRepository carRepository) {
-        this.carRepository = carRepository;
-    }
+    //private CarRepository carRepository;
 
     @Override
     public List<Car> findAll() {

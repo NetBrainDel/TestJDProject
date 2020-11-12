@@ -16,6 +16,9 @@
         <fileset id="fileset" name="Application Context" removed="false">
           <file>file://$MODULE_DIR$/src/main/resources/application-context.xml</file>
         </fileset>
+        <fileset id="fileset2" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/com/noirix/config/DatabaseConfig.java</file>
+        </fileset>
       </configuration>
     </facet>
   </component>
@@ -53,5 +56,6 @@
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.9.5" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.9.5" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-nop:1.7.13" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:20.1.0" level="project" />
   </component>
 </module>

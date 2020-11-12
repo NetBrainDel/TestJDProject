@@ -11,9 +11,10 @@ import org.springframework.context.annotation.PropertySource;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Configuration
 @PropertySource("classpath:database.properties")
 //future bean name = databaseConfig
-public class DatabaseConfigs {
+public class DatabaseConfig {
 
     @Value("${driverName}") //SPEL - Spring Expression Language
     private String driverName;
@@ -26,5 +27,8 @@ public class DatabaseConfigs {
 
     @Value("${password}")
     private String password;
+
+    @Value("${test}")
+    private String test;
 
 }

@@ -6,6 +6,7 @@ import com.noirix.exception.EntityNotFoundException;
 import com.noirix.repository.UserColumns;
 import com.noirix.repository.UserRepository;
 import com.noirix.util.DatabasePropertiesReader;
+import lombok.extern.log4j.Log4j;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 import java.sql.Connection;
@@ -23,6 +24,7 @@ import static com.noirix.util.DatabasePropertiesReader.DATABASE_LOGIN;
 import static com.noirix.util.DatabasePropertiesReader.DATABASE_PASSWORD;
 import static com.noirix.util.DatabasePropertiesReader.DATABASE_URL;
 
+//@Log4j
 @Repository
 public class UserRepositoryImpl implements UserRepository {
 
