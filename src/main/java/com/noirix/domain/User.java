@@ -1,20 +1,17 @@
 
 package com.noirix.domain;
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import lombok.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Setter
 @Getter
 @EqualsAndHashCode
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -34,10 +31,13 @@ public class User {
 
   private Timestamp changed = new Timestamp(System.currentTimeMillis());
 
-  private String country;
-
   private Float weight;
 
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+  }
 
 //  @Autowired
 //  @Qualifier("getCar")

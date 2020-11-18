@@ -4,16 +4,11 @@
     <title>Bye</title>
 </head>
 <body>
-<br/>
-${carModel}
-${userName}
-<br/>
-<br/>
+
 <form action="index.jsp">
     <button button="index.jsp">Главная</button>
 </form>
-<div>
-    ${singleUser}
-</div>
+
+${someMessage}
 </body>
 </html>

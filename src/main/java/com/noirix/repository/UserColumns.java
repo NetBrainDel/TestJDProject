@@ -9,5 +9,4 @@ public interface UserColumns {
     String CREATED = "created";
     String CHANGED = "changed";
     String WEIGHT = "weight";
-    String COUNTRY = "country";
 }

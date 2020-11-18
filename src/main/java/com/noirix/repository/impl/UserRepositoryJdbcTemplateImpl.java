@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 //@Slf4j
-@Repository
+//@Repository
 @Primary
 //@Log4j
 
@@ -41,14 +41,14 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
     public List<User> search(String query) {
         log.info("invoking search method");
         log.info(query);
-        return jdbcTemplate.query("select * from m_users where username like ?", new Object[]{query}, this::getUserRowMapper);
+        return jdbcTemplate.query("select * from m_users where username like ? ", new Object[]{query}, this::getUserRowMapper);
 
     }
 
     @Override
     public User save(User entity) {
-        final String createQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight,country) " +
-                "values (:username, :surname, :birthDate, :gender, :created, :changed, :weight, :country)";
+        final String createQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight) " +
+                "values (:username, :surname, :birthDate, :gender, :created, :changed, :weight)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -60,7 +60,6 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
         params.addValue("created", entity.getCreated());
         params.addValue("changed", entity.getChanged());
         params.addValue("weight", entity.getWeight());
-        params.addValue("country", entity.getCountry());
 
         namedParameterJdbcTemplate.update(createQuery, params, keyHolder, new String[]{"id"});
 
@@ -86,7 +85,6 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
         user.setCreated(rs.getTimestamp(UserColumns.CREATED));
         user.setChanged(rs.getTimestamp(UserColumns.CHANGED));
         user.setWeight(rs.getFloat(UserColumns.WEIGHT));
-        user.setCountry(rs.getString(UserColumns.COUNTRY));
         return user;
     }
 

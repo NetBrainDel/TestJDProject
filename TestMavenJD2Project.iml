@@ -13,10 +13,9 @@
     </facet>
     <facet type="Spring" name="Spring">
       <configuration>
-        <fileset id="fileset" name="Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/main/resources/application-context.xml</file>
-        </fileset>
-        <fileset id="fileset2" name="Spring Application Context" removed="false">
+        <fileset id="fileset3" name="Spring Application Context (2)" removed="false">
+          <file>file://$MODULE_DIR$/src/main/java/com/noirix/config/ApplicationBean.java</file>
+          <file>file://$MODULE_DIR$/src/main/java/com/noirix/config/ApplicationMainConfiguration.java</file>
           <file>file://$MODULE_DIR$/src/main/java/com/noirix/config/DatabaseConfig.java</file>
         </fileset>
       </configuration>
@@ -57,5 +56,7 @@
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.9.5" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-nop:1.7.13" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:20.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:5.2.9.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-web:5.2.9.RELEASE" level="project" />
   </component>
 </module>

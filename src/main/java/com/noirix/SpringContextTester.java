@@ -33,11 +33,13 @@ public class SpringContextTester {
 
         log.info(userService.findById(17L).toString());
 
-        List<User> sasha = userService.search("sasha");
-
-    for (User user : sasha) {
-        log.info(user.toString());
-    }
+//        List<User> sasha = userService.search("sasha");
+//
+//?
+//        for (User user : sasha) {
+//        log.info(user.toString());
+//
+//    }
 
                 User userForSave =
                 User.builder()
@@ -48,7 +50,6 @@ public class SpringContextTester {
                         .changed(new Timestamp(new Date().getTime()))
                         .gender(Gender.MALE)
                         .weight(81F)
-                        .country("Poland")
                         .build();
         log.info(userService.save(userForSave).toString());
 
@@ -124,7 +125,7 @@ public class SpringContextTester {
 
         log1.info(carService.findAll().stream().map(Car::getModel).collect(Collectors.joining(", ")));
 
-        log1.info(carService.findById(11L).toString());
+        log1.info(carService.findById(16L).toString());
 
         List <Car> sasha1 = carService.search("sasha1");
 

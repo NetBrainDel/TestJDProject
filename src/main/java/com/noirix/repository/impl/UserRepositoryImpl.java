@@ -39,8 +39,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User save(User user) {
-        final String findByIdQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight, country) " +
-                "values (?,?,?,?,?,?,?,?)";
+        final String findByIdQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight) " +
+                "values (?,?,?,?,?,?,?)";
 
         Connection connection;
         PreparedStatement statement;
@@ -64,7 +64,6 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setTimestamp(5, user.getCreated());
             statement.setTimestamp(6, user.getChanged());
             statement.setFloat(7, user.getWeight());
-            statement.setString(8, user.getCountry());
 
             statement.executeUpdate();
 
@@ -126,7 +125,6 @@ public class UserRepositoryImpl implements UserRepository {
         user.setCreated(rs.getTimestamp(UserColumns.CREATED));
         user.setChanged(rs.getTimestamp(UserColumns.CHANGED));
         user.setWeight(rs.getFloat(UserColumns.WEIGHT));
-        user.setCountry(rs.getString(UserColumns.COUNTRY));
         return user;
     }
 
@@ -179,7 +177,6 @@ public class UserRepositoryImpl implements UserRepository {
                 "created = ?,  " +
                 "changed = ?,  " +
                 "weight = ?  " +
-                "country = ?  " +
                 "where id = ?";
 
         Connection connection;
@@ -202,8 +199,7 @@ public class UserRepositoryImpl implements UserRepository {
             statement.setTimestamp(5, user.getCreated());
             statement.setTimestamp(6, user.getChanged());
             statement.setFloat(7, user.getWeight());
-            statement.setString(8, user.getCountry());
-            statement.setLong(9, user.getId());
+            statement.setLong(8, user.getId());
 
             statement.executeUpdate();
             return findById(user.getId());
