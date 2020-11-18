@@ -1,6 +1,7 @@
 package com.noirix.controller;
 
 import com.noirix.controller.request.SearchCriteria;
+import com.noirix.controller.request.UserCreateRequest;
 import com.noirix.domain.User;
 import com.noirix.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class UserController {
     public final UserService userService;
 
     public static final String USER_PAGE = "users";
-    public static final String USER_LIST_ATTRIBUTE = "users";
+    public static final String USERS_LIST_ATTRIBUTE = "users";
 
         // /users
        @GetMapping
@@ -27,7 +28,7 @@ public class UserController {
             ModelAndView result = new ModelAndView();
 
             result.setViewName(USER_PAGE);
-            result.addObject(USER_LIST_ATTRIBUTE, userService.findAll());
+            result.addObject(USERS_LIST_ATTRIBUTE, userService.findAll());
 
             return result;
         }
