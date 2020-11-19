@@ -9,7 +9,7 @@
            action="/users" modelAttribute="userCreateRequest">
     <table>
         <tr>
-            <td><form:label path="name">Name</form:label></td>
+            <td><form:label path="username">Username</form:label></td>
             <td><form:input path="username"/>${userCreateRequest.username}</td>
         </tr>
         <tr>

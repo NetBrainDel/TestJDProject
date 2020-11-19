@@ -23,16 +23,16 @@
             <td>Edit</td>
             <td>Delete</td>
         </tr>
-        <c:forEach var="user" items="${users}">
+        <c:forEach var="users" items="${users}">
             <tr>
-                <td>${user.id}</td>
-                <td>${user.username}</td>
-                <td>${user.surname}</td>
-                <td>${user.birthDate}</td>
-                <td>${user.gender}</td>
-                <td>${user.created}</td>
-                <td>${user.changed}</td>
-                <td>${user.weight}</td>
+                <td>${users.id}</td>
+                <td>${users.username}</td>
+                <td>${users.surname}</td>
+                <td>${users.birthDate}</td>
+                <td>${users.gender}</td>
+                <td>${users.created}</td>
+                <td>${users.changed}</td>
+                <td>${users.weight}</td>
                 <td><button>Edit</button></td>
                 <td><button>Delete</button></td>
             </tr>
