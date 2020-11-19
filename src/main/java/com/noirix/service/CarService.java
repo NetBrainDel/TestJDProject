@@ -1,6 +1,7 @@
 package com.noirix.service;
 
 import com.noirix.domain.Car;
+import com.noirix.domain.User;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ public interface CarService {
     Car findById(Long carId);
 
     List<Car> search(String query);
+
+    Car update(Car car);
 }
 
 

@@ -2,6 +2,7 @@ package com.noirix.service.impl;
 
 
 import com.noirix.domain.Car;
+import com.noirix.domain.User;
 import com.noirix.repository.CarRepository;
 import com.noirix.service.CarService;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,10 @@ public class CarServiceImpl implements CarService {
     @Override
     public List<Car> search(String query) {
         return carRepository.search(query); //Ctrl+Alb+B - go to implementation of method
+    }
+
+    @Override
+    public Car update(Car car) {
+        return carRepository.update(car);
     }
 }

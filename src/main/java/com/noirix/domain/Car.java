@@ -1,6 +1,8 @@
 package com.noirix.domain;
 
 import lombok.*;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -9,7 +11,7 @@ import java.util.Date;
 @Setter
 @Getter
 @EqualsAndHashCode
-@ToString
+//@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -32,5 +34,10 @@ public class Car {
   private String country_of_creation;
 
   private Long dealer_id;
+
+  @Override
+  public String toString() {
+    return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+  }
 
 }
