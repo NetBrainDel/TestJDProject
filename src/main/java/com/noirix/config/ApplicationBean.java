@@ -1,13 +1,12 @@
 package com.noirix.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import javax.sql.DataSource;
-@Configuration
-public class ApplicationBean {
+
+public class ApplicationBean{
 
     @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
@@ -19,5 +18,8 @@ public class ApplicationBean {
         return new NamedParameterJdbcTemplate(dataSource);
     }
 
+//    @Bean
+//    public static NoOpPasswordEncoder passwordEncoder() {
+//        return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
+//    }
 }
-

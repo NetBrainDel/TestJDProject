@@ -4,7 +4,6 @@ import com.noirix.domain.Gender;
 import com.noirix.domain.User;
 import com.noirix.repository.UserColumns;
 import com.noirix.repository.UserRepository;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Primary;
@@ -14,17 +13,16 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 //@Slf4j
-//@Repository
+@Repository
 @Primary
-//@Log4j
 
 public class UserRepositoryJdbcTemplateImpl implements UserRepository {
 
@@ -37,13 +35,14 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
+
     @Override
     public List<User> search(String query) {
         log.info("invoking search method");
         log.info(query);
-        return jdbcTemplate.query("select * from m_users where username like ? ", new Object[]{query}, this::getUserRowMapper);
-
+        return jdbcTemplate.query("select * from m_users where name like ?", new Object[]{query}, this::getUserRowMapper);
     }
+
 
     @Override
     public User save(User entity) {

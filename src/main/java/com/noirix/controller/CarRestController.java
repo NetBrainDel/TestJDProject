@@ -23,9 +23,8 @@ public class CarRestController {
     @GetMapping
     public ResponseEntity<List<Car>> findAllCars() {
 
-        throw new RuntimeException("Test Controller advice");
         //return ResponseEntity.ok(carService.findAll());
-        //return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

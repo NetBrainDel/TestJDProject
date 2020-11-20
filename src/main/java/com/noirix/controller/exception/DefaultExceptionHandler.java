@@ -1,11 +1,11 @@
 package com.noirix.controller.exception;
 
-import com.noirix.controller.responces.ErrorMessage;
-import org.apache.log4j.Logger;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+        import com.noirix.controller.responces.ErrorMessage;
+        import org.apache.log4j.Logger;
+        import org.springframework.http.HttpStatus;
+        import org.springframework.http.ResponseEntity;
+        import org.springframework.web.bind.annotation.ControllerAdvice;
+        import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class DefaultExceptionHandler {

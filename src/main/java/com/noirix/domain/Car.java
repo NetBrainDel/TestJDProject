@@ -35,6 +35,8 @@ public class Car {
 
   private Long dealer_id;
 
+  private Long userId;
+
   @Override
   public String toString() {
     return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);

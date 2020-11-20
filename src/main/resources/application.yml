@@ -1,12 +1,13 @@
+
 spring:
   datasource:
     hikari:
-      jdbc-url: "jdbc:postgresql://localhost:5432/webinar_database?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+      jdbc-url: "jdbc:postgresql://localhost:5433/webinar?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
       maximum-pool-size: 10
       driver-class-name: org.postgresql.Driver
     username: postgres
     password: root
-    url: "jdbc:postgresql://localhost:5432/webinar_database?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+    url: "jdbc:postgresql://localhost:5433/webinar?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
     driver-class-name: org.postgresql.Driver
 
 ---
@@ -16,3 +17,11 @@ amazon:
     s3: 123123213
     token: someToken
     password: password
+
+---
+
+jwtconfig:
+  secret: secret
+  expiration: 60000
+
+---
