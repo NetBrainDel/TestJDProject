@@ -1,6 +1,7 @@
 
 package com.noirix.controller;
 
+import com.noirix.config.AmazonConfig;
 import com.noirix.controller.request.SearchCriteria;
 import com.noirix.controller.request.UserChangeRequest;
 import com.noirix.controller.request.UserCreateRequest;
@@ -29,6 +30,7 @@ import java.util.List;
 public class UserRestController {
 
     public final UserService userService;
+
 
     @GetMapping
     public ResponseEntity<List<User>> findAllUsers() {

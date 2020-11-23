@@ -22,7 +22,7 @@ public class DefaultExceptionHandler {
         /* Handles all other exceptions. Status code 500. */
         log.error(e.getMessage(), e);
         log.info(e.getMessage(), e);
-        return new ResponseEntity<>(new ErrorMessage(2L, e.getMessage()),
+        return new ResponseEntity<>(new ErrorMessage(1L, e.getMessage()),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
