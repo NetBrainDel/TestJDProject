@@ -24,9 +24,9 @@ public class CarController {
     public static final String CAR_PAGE = "cars";
     public static final String CARS_LIST_ATTRIBUTE = "cars";
 
-    // /users
+    // /cars
     @GetMapping
-    public ModelAndView getAllUsers() {
+    public ModelAndView getAllCars() {
         ModelAndView result = new ModelAndView();
 
         result.setViewName(CAR_PAGE);
@@ -37,7 +37,7 @@ public class CarController {
 
 
     @GetMapping("/create")
-    public ModelAndView getUserCreateRequest() {
+    public ModelAndView getCarCreateRequest() {
         ModelAndView result = new ModelAndView();
 
         result.setViewName("createcar");
@@ -85,7 +85,7 @@ public class CarController {
     }
 
     @PostMapping
-    public ModelAndView createUser(@ModelAttribute CarCreateRequest carCreateRequest) {
+    public ModelAndView createCar(@ModelAttribute CarCreateRequest carCreateRequest) {
 
         //converters
         Car car = new Car();

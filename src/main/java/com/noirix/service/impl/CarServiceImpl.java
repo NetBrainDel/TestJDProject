@@ -2,7 +2,6 @@ package com.noirix.service.impl;
 
 
 import com.noirix.domain.Car;
-import com.noirix.domain.User;
 import com.noirix.repository.CarRepository;
 import com.noirix.service.CarService;
 import lombok.RequiredArgsConstructor;

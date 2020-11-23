@@ -1,7 +1,7 @@
 package com.noirix.service;
 
 import com.noirix.domain.Car;
-import com.noirix.domain.User;
+
 
 import java.util.List;
 

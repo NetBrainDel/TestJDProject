@@ -114,4 +114,9 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
     public Long delete(User object) {
         return null;
     }
+
+    @Override
+    public Optional<User> findByLogin(String login) {
+        return Optional.of(jdbcTemplate.queryForObject("select * from m_users where login = ?", new Object[]{login}, this::getUserRowMapper));
+    }
 }
