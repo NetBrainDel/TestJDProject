@@ -26,7 +26,7 @@ public class AuthenticationController {
 
     private final UserDetailsService userProvider;
 
-    //    @ApiOperation(value = "Login user in system", notes = "Return Auth-Token with user login")
+//        @ApiOperation(value = "Login user in system", notes = "Return Auth-Token with user login")
 //    @ApiResponses({
 //            @ApiResponse(code = 200, message = "Successful authorization"),
 //            @ApiResponse(code = 400, message = "Request error"),

@@ -19,7 +19,8 @@ import java.util.stream.Collectors;
 import static io.jsonwebtoken.Claims.SUBJECT;
 import static java.util.Calendar.MILLISECOND;
 
-/*Generate JWT Token and fields in token. Also add signature into 3-d part of token*/
+/*Generate JWT Token and fields in token.
+Also add signature into 3-d part of token*/
 @Component
 @RequiredArgsConstructor
 public class TokenUtils {

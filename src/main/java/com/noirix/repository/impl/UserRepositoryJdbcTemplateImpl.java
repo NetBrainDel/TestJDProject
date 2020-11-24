@@ -40,14 +40,14 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
     public List<User> search(String query) {
         log.info("invoking search method");
         log.info(query);
-        return jdbcTemplate.query("select * from m_users where name like ?", new Object[]{query}, this::getUserRowMapper);
+        return jdbcTemplate.query("select * from m_users where username like ?", new Object[]{query}, this::getUserRowMapper);
     }
 
 
     @Override
     public User save(User entity) {
-        final String createQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight) " +
-                "values (:username, :surname, :birthDate, :gender, :created, :changed, :weight)";
+        final String createQuery = "insert into m_users (username, surname, birth_date, gender, created, changed, weight, login, password) " +
+                "values (:username, :surname, :birthDate, :gender, :created, :changed, :weight, :login, :password)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -59,6 +59,9 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
         params.addValue("created", entity.getCreated());
         params.addValue("changed", entity.getChanged());
         params.addValue("weight", entity.getWeight());
+        params.addValue("login", entity.getLogin());
+        params.addValue("password", entity.getPassword());
+
 
         namedParameterJdbcTemplate.update(createQuery, params, keyHolder, new String[]{"id"});
 
@@ -84,6 +87,8 @@ public class UserRepositoryJdbcTemplateImpl implements UserRepository {
         user.setCreated(rs.getTimestamp(UserColumns.CREATED));
         user.setChanged(rs.getTimestamp(UserColumns.CHANGED));
         user.setWeight(rs.getFloat(UserColumns.WEIGHT));
+        user.setLogin(rs.getString(UserColumns.LOGIN));
+        user.setPassword(rs.getString(UserColumns.PASSWORD));
         return user;
     }
 
