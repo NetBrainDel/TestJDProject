@@ -6,6 +6,8 @@ import com.noirix.controller.request.SearchCriteria;
 import com.noirix.controller.request.UserChangeRequest;
 import com.noirix.controller.request.UserCreateRequest;
 import com.noirix.domain.User;
+import com.noirix.domain.hibernate.HibernateUser;
+import com.noirix.repository.HibernateUserRepository;
 import com.noirix.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,7 @@ public class UserRestController {
 
     public final UserService userService;
 
+    public final HibernateUserRepository hibernateUserRepository;
 
     @GetMapping
     public ResponseEntity<List<User>> findAllUsers() {
@@ -38,6 +41,13 @@ public class UserRestController {
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
         //return ResponseEntity.ok(userService.findAll());
     }
+    @GetMapping("/hibernate")
+    public ResponseEntity<List<HibernateUser>> findAllHibernateUsers() {
+
+        //return ResponseEntity.ok(userService.findAll());
+        return new ResponseEntity<>(hibernateUserRepository.findAll(), HttpStatus.OK);
+    }
+
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
