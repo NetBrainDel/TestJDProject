@@ -53,6 +53,7 @@ public class CarRestController {
         car.setGuarantee_expiration_date(new Timestamp(System.currentTimeMillis()));
         car.setPrice(carCreateRequest.getPrice());
         car.setDealer_id(carCreateRequest.getDealer_id());
+        car.setUserId(carCreateRequest.getUserId());
         return carService.save(car);
     }
 
@@ -72,6 +73,7 @@ public class CarRestController {
         car.setGuarantee_expiration_date(new Timestamp(System.currentTimeMillis()));
         car.setPrice(carCreateRequest.getPrice());
         car.setDealer_id(carCreateRequest.getDealer_id());
+        car.setUserId(carCreateRequest.getUserId());
         return carService.update(car);
     }
 
@@ -90,6 +92,7 @@ public class CarRestController {
         car.setGuarantee_expiration_date(new Timestamp(System.currentTimeMillis()));
         car.setPrice(carChangeRequest.getPrice());
         car.setDealer_id(carChangeRequest.getDealer_id());
+        car.setUserId(carChangeRequest.getUserId());
         return carService.update(car);
     }
 }

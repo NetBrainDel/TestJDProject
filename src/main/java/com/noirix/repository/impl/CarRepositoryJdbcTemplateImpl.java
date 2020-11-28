@@ -44,8 +44,8 @@ public class CarRepositoryJdbcTemplateImpl  implements CarRepository {
 
         @Override
         public Car save(Car entity) {
-            final String createQuery = "insert into m_cars (model, guarantee_expiration_date, price, color, creation, capacity_l, country_of_creation, dealer_id) " +
-                    "values (:model, :guarantee_expiration_date, :price, :color, :creation, :capacity_l, :country_of_creation, :dealer_id);";
+            final String createQuery = "insert into m_cars (model, guarantee_expiration_date, price, color, creation, capacity_l, country_of_creation, dealer_id, user_id) " +
+                    "values (:model, :guarantee_expiration_date, :price, :color, :creation, :capacity_l, :country_of_creation, :dealer_id, :user_id);";
 
             KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -58,6 +58,7 @@ public class CarRepositoryJdbcTemplateImpl  implements CarRepository {
             params.addValue("capacity_l", entity.getCapacity_l());
             params.addValue("country_of_creation", entity.getCountry_of_creation());
             params.addValue("dealer_id", entity.getDealer_id());
+            params.addValue("user_id", entity.getUserId());
 
             namedParameterJdbcTemplate.update(createQuery, params, keyHolder, new String[]{"id"});
 
@@ -82,6 +83,7 @@ public class CarRepositoryJdbcTemplateImpl  implements CarRepository {
             car.setCapacity_l(rs.getDouble(CarColumns.CAPACITY_L));
             car.setCountry_of_creation(rs.getString(CarColumns.COUNTRY_OF_CREATION));
             car.setDealer_id(rs.getLong(CarColumns.DEALER_ID));
+            car.setUserId(rs.getLong(CarColumns.USER_ID));
             return car;
         }
 

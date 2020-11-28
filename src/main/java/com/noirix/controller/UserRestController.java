@@ -35,6 +35,7 @@ public class UserRestController {
 
     public final HibernateUserRepository hibernateUserRepository;
 
+
     @GetMapping
     public ResponseEntity<List<User>> findAllUsers() {
 

@@ -11,4 +11,5 @@ public interface CarColumns {
     String CAPACITY_L = "CAPACITY_L";
     String COUNTRY_OF_CREATION = "COUNTRY_OF_CREATION";
     String DEALER_ID = "DEALER_ID";
+    String USER_ID = "USER_ID";
 }

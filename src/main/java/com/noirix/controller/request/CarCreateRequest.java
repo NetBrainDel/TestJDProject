@@ -18,4 +18,6 @@ public class CarCreateRequest {
     private Double capacity_l;
 
     private Long dealer_id;
+
+    private Long userId;
 }
